@@ -9,11 +9,6 @@
         android:title="Alterar Dados"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/menuExcluirDados"
-        android:icon="@drawable/ic_shopping_cart_cinza_24dp"
-        android:title="Excluir conta"
-        app:showAsAction="never" />
 
     <item
         android:id="@+id/menuSair"

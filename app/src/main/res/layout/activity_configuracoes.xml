@@ -13,4 +13,79 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imagePerfil"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_margin="8dp"
+            app:srcCompat="@drawable/perfil" />
+
+        <EditText
+            android:id="@+id/editTextNomeUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="Nome completo"
+            android:inputType="text"
+            android:padding="8dp" />
+
+        <EditText
+            android:id="@+id/editTextNascimento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="Data de nascimento"
+            android:inputType="date"
+            android:padding="8dp" />
+
+        <EditText
+            android:id="@+id/editTextCartaoCredito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="Número do Cartão de Crédito"
+            android:inputType="number"
+            android:padding="8dp" />
+
+        <EditText
+            android:id="@+id/editTextValidadeCC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="Validade do Cartão de Crédito"
+            android:inputType="date"
+            android:padding="8dp" />
+
+        <EditText
+            android:id="@+id/editTextCVV"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="CVV"
+            android:inputType="number"
+            android:padding="8dp" />
+
+        <Button
+            android:id="@+id/buttonAcesso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:theme="@style/botaoPadrao"
+            android:text="Acessar" />
+
+    </LinearLayout>
+
 </LinearLayout>

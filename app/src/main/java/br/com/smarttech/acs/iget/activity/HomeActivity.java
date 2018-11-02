@@ -75,9 +75,9 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.menuAlterarDados:
                 alterarDados();
                 break;
-            case R.id.menuExcluirDados:
-                excluirUsuario();
-                break;
+            //case R.id.menuExcluirDados:
+                //excluirUsuario();
+                //break;
             case R.id.menuCompras:
                 carrinhoCompras();
                 break;
