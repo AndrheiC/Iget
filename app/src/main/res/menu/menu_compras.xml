@@ -2,11 +2,6 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/menuAlteraUsuario"
-        android:icon="@drawable/ic_shopping_cart_cinza_24dp"
-        android:title="AlteraDados"
-        app:showAsAction="always" />
 
     <item
         android:id="@+id/menuAlterarDados"
@@ -28,7 +23,7 @@
 
     <item
         android:id="@+id/menuCompras"
-        android:icon="@drawable/ic_settings_cinza_24dp"
+        android:icon="@drawable/ic_shopping_cart_cinza_24dp"
         android:title="Compras"
         app:showAsAction="always" />
 </menu>

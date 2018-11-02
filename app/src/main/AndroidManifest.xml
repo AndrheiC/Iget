@@ -17,7 +17,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.AutenticacaoActivity" />
-        <activity android:name=".activity.HomeActivity"></activity>
+        <activity android:name=".activity.HomeActivity" />
+        <activity android:name=".activity.ConfiguracoesActivity"
+            android:parentActivityName=".activity.HomeActivity"/>
+        <activity android:name=".activity.ComprasActivity"
+            android:parentActivityName=".activity.HomeActivity"></activity>
     </application>
 
 </manifest>

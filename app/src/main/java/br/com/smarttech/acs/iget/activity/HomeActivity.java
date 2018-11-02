@@ -1,6 +1,7 @@
 package br.com.smarttech.acs.iget.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,6 +51,7 @@ public class HomeActivity extends AppCompatActivity {
         ProdutoAdapter adapter = new ProdutoAdapter(postagens);
         recyclerPostagem.setAdapter(adapter);
 
+        //Configura toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("IGet - Compras");
         setSupportActionBar(toolbar);
@@ -69,17 +71,15 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.menuSair:
                 deslogarUsuario();
                 break;
-            case R.id.menuAlteraUsuario:
-                //abrirConfiguracoes();
-                break;
+
             case R.id.menuAlterarDados:
-                //alterarDados();
+                alterarDados();
                 break;
             case R.id.menuExcluirDados:
-                //excluirUsuario();
+                excluirUsuario();
                 break;
             case R.id.menuCompras:
-                //carrinhoCompras();
+                carrinhoCompras();
                 break;
 
         }
@@ -89,9 +89,26 @@ public class HomeActivity extends AppCompatActivity {
     private void deslogarUsuario(){
         try{
             autenticacao.signOut();
+            //startActivity(new Intent(HomeActivity.this, AutenticacaoActivity.class));
+            finish();
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private void alterarDados(){
+        startActivity(new Intent(HomeActivity.this, ConfiguracoesActivity.class ));
+
+    }
+
+    private void carrinhoCompras(){
+        startActivity(new Intent(HomeActivity.this, ComprasActivity.class ));
+
+    }
+
+    private void excluirUsuario(){
+        autenticacao.getCurrentUser().delete();
+        startActivity(new Intent(HomeActivity.this, AutenticacaoActivity.class));
     }
 
     public void prepararPostagens(){
