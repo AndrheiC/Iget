@@ -82,9 +82,10 @@
             android:id="@+id/buttonAcesso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="validarDadosUsuario"
             android:padding="16dp"
-            android:theme="@style/botaoPadrao"
-            android:text="Acessar" />
+            android:text="Acessar"
+            android:theme="@style/botaoPadrao" />
 
     </LinearLayout>
 
