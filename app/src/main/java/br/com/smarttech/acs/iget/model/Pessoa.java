@@ -51,6 +51,8 @@ public class Pessoa {
         this.cvv = cvv;
     }
 
+
+    //Salvando os dados no Firebase...Mudar para room
     public void salvar(){
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getReferenciaFirebase();
         DatabaseReference pessoaRef = firebaseRef.child("pessoas").child(getId());

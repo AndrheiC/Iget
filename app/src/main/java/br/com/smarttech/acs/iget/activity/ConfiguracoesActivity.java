@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -34,6 +35,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     private ImageView imagePerfil;
     private static final int SELECAO_GALERIA = 200;
     private StorageReference storageReference;
+    private DatabaseReference firebaseRef;
     private String idUsuarioLogado;
     private String urlImagemSelecionada = "";
 
@@ -64,6 +66,18 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    //Recuperar dados - Inicio
+    private void recuperarDadosUsuario(){
+
+        Pessoa pessoa = new Pessoa();
+        editNomeUser.setText(pessoa.getNome().toString());
+        editNascimento.setText(pessoa.getNascimento().toString());
+        editCartaoCredito.setText(pessoa.getCartaoCredito().toString());
+        editValidadeCartao.setText(pessoa.getValidadeCartao().toString());
+        editCVV.setText(pessoa.getCvv().toString());
+
     }
 
     public void validarDadosUsuario(View view){
@@ -99,6 +113,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                             pessoa.setCvv(cvv);
                             pessoa.setUrlImagem(urlImagemSelecionada);
                             pessoa.salvar();
+                            //finish();
                         }else{
                             exibirMensagem("Digite o CVV do cartão de crédito!");
                         }
@@ -146,6 +161,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                     imagem.compress(Bitmap.CompressFormat.JPEG, 70, baos);
                     byte[] dadosImagem = baos.toByteArray();
 
+                    //Armazenamento da imagem está no Firebase...Mudar para o room
                     final StorageReference imagemRef = storageReference.child("imagens").child("user").child(idUsuarioLogado + "jpeg");
                     UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
