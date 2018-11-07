@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 
 import java.util.List;
 
@@ -31,6 +32,23 @@ public class PessoaAdapter extends ArrayAdapter {
         }
 
         Pessoa pessoa= (Pessoa) getItem(position);
+
+        EditText editTextNome = (EditText) super.getView(position, currentView, parent);
+        editTextNome.setText(pessoa.getNome());
+
+        EditText editTextNascimento = (EditText) super.getView(position, currentView, parent);
+        editTextNascimento.setText(pessoa.getNascimento());
+
+        EditText editTextCartaoCredito = (EditText) super.getView(position, currentView, parent);
+        editTextCartaoCredito.setText(pessoa.getCartaoCredito());
+
+        EditText editTextValidadeCartao = (EditText) super.getView(position, currentView, parent);
+        editTextValidadeCartao.setText(pessoa.getValidadeCartao());
+
+        EditText editTextCvv = (EditText) super.getView(position, currentView, parent);
+        editTextCvv.setText(pessoa.getCvv());
+
+
 
         return super.getView(position, currentView, parent);
     }

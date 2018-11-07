@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -24,6 +25,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
@@ -47,6 +50,13 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     private String urlImagemSelecionada = "";
     Pessoa pessoa = new Pessoa();
     private PessoaRepository repository;
+    Context context;
+
+
+    //ContextWrapper cw = new ContextWrapper(getApplicationContext());
+    //File diretorio = cw.getDir("igetImageDir", Context.MODE_PRIVATE);
+    //String caminho = String.valueOf(diretorio);
+
 
 
     @Override
@@ -60,13 +70,14 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         pessoa.setId(idUsuarioLogado);
 
         repository = new PessoaRepository(getApplicationContext());
-        recuperarDadosUsuario(idUsuarioLogado);
+        //recuperarDadosUsuario(idUsuarioLogado);
 
         //Configura toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("IGet - Configurações");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         imagePerfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +94,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
     //Recuperar dados - Inicio
     private void recuperarDadosUsuario(String id){
+
         pessoa = repository.pessoaPorId(id);
 
         editNomeUser.setText(pessoa.getNome().toString());
@@ -90,6 +102,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         editCartaoCredito.setText(pessoa.getCartaoCredito().toString());
         editValidadeCartao.setText(pessoa.getValidadeCartao().toString());
         editCVV.setText(pessoa.getCvv().toString());
+        //imagePerfil=loadImageFromStorage(caminho, idUsuarioLogado);
 
     }
 
@@ -128,7 +141,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
                             pessoa.setCvv(cvv);
                             pessoa.setUrlImagem(urlImagemSelecionada);
-                            pessoa.salvar();
+                            salvarPessoa(this);
                             //finish();
                         }else{
                             exibirMensagem("Digite o CVV do cartão de crédito!");
@@ -157,8 +170,8 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         Toast.makeText(this, texto, Toast.LENGTH_SHORT).show();
     }
 
-    //@Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    //Armazena imagem no firebase
+    /*protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode==RESULT_OK){
@@ -178,48 +191,6 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                     byte[] dadosImagem = baos.toByteArray();
 
 
-
-
-
-
-                    //Tentativa de salvar no app
-                    /*
-                    private String saveToInternalStorage(Bitmap bitmapImage){
-                        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-                        // path to /data/data/yourapp/app_data/imageDir
-                        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-                        // Create imageDir
-                        File mypath=new File(directory,"profile.jpg");
-
-                        FileOutputStream fos = null;
-                        try {
-                            fos = new FileOutputStream(mypath);
-                            // Use the compress method on the BitMap object to write image to the OutputStream
-                            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        } finally {
-                            try {
-                                fos.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        return directory.getAbsolutePath();
-                    }
-                    */
-
-
-
-
-
-
-
-
-
-
-
-                    //Armazenamento da imagem está no Firebase...Mudar para o room
                     final StorageReference imagemRef = storageReference.child("imagens").child("user").child(idUsuarioLogado + "jpeg");
                     UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -242,6 +213,96 @@ public class ConfiguracoesActivity extends AppCompatActivity {
             }
         }
     }
+    */
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            Bitmap imagem = null;
+
+            try {
+                switch (requestCode) {
+                    case SELECAO_GALERIA:
+                        Uri localImagem = data.getData();
+                        try {
+                            imagem = MediaStore.Images.Media.getBitmap(getContentResolver(), localImagem);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+                if (imagem != null) {
+                    //imagePerfil.setImageBitmap(imagem);
+                    saveToInternalStorage(imagem, idUsuarioLogado);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    //Armazena imagem no app
+    private String saveToInternalStorage(Bitmap bitmapImage, String idUsuario){
+
+        //Colocado como global, mas deu nullPointerException
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        //path para /data/data/yourapp/app_data/igetImageDir
+        File diretorio = cw.getDir("igetImageDir", Context.MODE_PRIVATE);
+        //String caminho = String.valueOf(diretorio);
+
+
+        // Cria igetImageDir
+        File mypath=new File(diretorio,idUsuario + ".jpg");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Comprime para escrever no outPutStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            imagePerfil.setImageBitmap(bitmapImage);
+            exibirMensagem("Imagem salva!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return diretorio.getAbsolutePath();
+    }
+
+    //Tentativa de ler imagem do app
+    private void loadImageFromStorage(String path, String idUsuario)
+    {
+        try {
+            File f=new File(path, idUsuario+".jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            ImageView img=(ImageView)findViewById(R.id.imagePerfil);
+            img.setImageBitmap(b);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void salvarPessoa(ConfiguracoesActivity view){
+
+        pessoa.setId(idUsuarioLogado);
+        pessoa.setNome(editNomeUser.getText().toString());
+        pessoa.setNascimento(editNascimento.getText().toString());
+        pessoa.setCartaoCredito(editCartaoCredito.getText().toString());
+        pessoa.setValidadeCartao(editValidadeCartao.getText().toString());
+        pessoa.setCvv(editCVV.getText().toString());
+        repository.insert(pessoa);
+        exibirMensagem("Dados salvos com sucesso");
+    }
+
 
     private void inicializarComponentes(){
         imagePerfil = findViewById(R.id.imagePerfil);

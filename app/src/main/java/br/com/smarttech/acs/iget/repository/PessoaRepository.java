@@ -7,19 +7,19 @@ import java.util.List;
 
 import br.com.smarttech.acs.iget.DAO.PessoaDAO;
 import br.com.smarttech.acs.iget.database.PessoaRoomDatabase;
+import br.com.smarttech.acs.iget.helper.ConfiguracaoFirebase;
 import br.com.smarttech.acs.iget.model.Pessoa;
 
 public class PessoaRepository {
     private PessoaDAO mPessoaDAO;
-    private List<Pessoa> mPessoas;
+    private Pessoa mPessoas;
+    private String idUsuarioLogado;
 
     public PessoaRepository(Context context){
         PessoaRoomDatabase db = PessoaRoomDatabase.getDatabase(context);
         mPessoaDAO = db.pessoaDAO();
-        mPessoas = mPessoaDAO.loadPessoas();
-    }
-    public List<Pessoa> getAllPessoas() {
-        return mPessoas;
+        idUsuarioLogado = ConfiguracaoFirebase.getIdUsuario();
+        mPessoas = mPessoaDAO.recuperarDadosUsuario(idUsuarioLogado);
     }
 
     public Pessoa pessoaPorId(String ID){

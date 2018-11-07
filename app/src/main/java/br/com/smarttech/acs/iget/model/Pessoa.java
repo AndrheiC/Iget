@@ -56,9 +56,13 @@ public class Pessoa {
 
     //Salvando os dados no Firebase...Mudar para room
     public void salvar(){
+
+
+        /*Salvar firebase incompleto
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getReferenciaFirebase();
         DatabaseReference pessoaRef = firebaseRef.child("pessoas").child(getId());
         pessoaRef.setValue(this);
+        */
 
     }
 
