@@ -30,6 +30,10 @@ public class PessoaRepository {
         new insertAsyncTask(mPessoaDAO).execute(pessoa);
     }
 
+    public void update(Pessoa pessoa){
+        new updateAsyncTask(mPessoaDAO).execute(pessoa);
+    }
+
 
 
     private static class insertAsyncTask extends AsyncTask<Pessoa,Void, Void>{
@@ -41,6 +45,19 @@ public class PessoaRepository {
         @Override
         protected Void doInBackground(final Pessoa...params) {
             mAsyncTaskDAO.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class updateAsyncTask extends AsyncTask<Pessoa,Void, Void>{
+        private PessoaDAO mAsyncTaskDAO;
+        updateAsyncTask(PessoaDAO dao){
+            mAsyncTaskDAO = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Pessoa...params) {
+            mAsyncTaskDAO.update(params[0]);
             return null;
         }
     }

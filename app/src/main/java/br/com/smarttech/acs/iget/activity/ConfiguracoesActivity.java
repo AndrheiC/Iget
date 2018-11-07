@@ -53,7 +53,8 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     Context context;
 
 
-    //ContextWrapper cw = new ContextWrapper(getApplicationContext());
+    ContextWrapper cw;
+    File diretorio;
     //File diretorio = cw.getDir("igetImageDir", Context.MODE_PRIVATE);
     //String caminho = String.valueOf(diretorio);
 
@@ -64,13 +65,19 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracoes);
 
+        cw= new ContextWrapper(getApplicationContext());
+        diretorio = cw.getDir("igetImageDir", Context.MODE_PRIVATE);
+        String caminho = String.valueOf(diretorio);
+
         inicializarComponentes();
         storageReference = ConfiguracaoFirebase.getFirebaseStorage();
         idUsuarioLogado = ConfiguracaoFirebase.getIdUsuario();
         pessoa.setId(idUsuarioLogado);
 
         repository = new PessoaRepository(getApplicationContext());
-        //recuperarDadosUsuario(idUsuarioLogado);
+        recuperarDadosUsuario(idUsuarioLogado);
+
+        loadImageFromStorage(caminho, idUsuarioLogado);
 
         //Configura toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -141,7 +148,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
                             pessoa.setCvv(cvv);
                             pessoa.setUrlImagem(urlImagemSelecionada);
-                            salvarPessoa(this);
+                            salvarPessoa(view);
                             //finish();
                         }else{
                             exibirMensagem("Digite o CVV do cartão de crédito!");
@@ -291,7 +298,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
     }
 
-    public void salvarPessoa(ConfiguracoesActivity view){
+    public void salvarPessoa(View view){
 
         pessoa.setId(idUsuarioLogado);
         pessoa.setNome(editNomeUser.getText().toString());
@@ -299,7 +306,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         pessoa.setCartaoCredito(editCartaoCredito.getText().toString());
         pessoa.setValidadeCartao(editValidadeCartao.getText().toString());
         pessoa.setCvv(editCVV.getText().toString());
-        repository.insert(pessoa);
+        repository.update(pessoa);
         exibirMensagem("Dados salvos com sucesso");
     }
 
