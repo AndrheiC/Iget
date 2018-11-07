@@ -1,5 +1,7 @@
 package br.com.smarttech.acs.iget.activity;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -21,13 +23,18 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import br.com.smarttech.acs.iget.DAO.PessoaDAO;
 import br.com.smarttech.acs.iget.R;
 import br.com.smarttech.acs.iget.helper.ConfiguracaoFirebase;
 import br.com.smarttech.acs.iget.model.Pessoa;
+import br.com.smarttech.acs.iget.repository.PessoaRepository;
 
 public class ConfiguracoesActivity extends AppCompatActivity {
 
@@ -38,6 +45,8 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     private DatabaseReference firebaseRef;
     private String idUsuarioLogado;
     private String urlImagemSelecionada = "";
+    Pessoa pessoa = new Pessoa();
+    private PessoaRepository repository;
 
 
     @Override
@@ -48,6 +57,10 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         inicializarComponentes();
         storageReference = ConfiguracaoFirebase.getFirebaseStorage();
         idUsuarioLogado = ConfiguracaoFirebase.getIdUsuario();
+        pessoa.setId(idUsuarioLogado);
+
+        repository = new PessoaRepository(getApplicationContext());
+        recuperarDadosUsuario(idUsuarioLogado);
 
         //Configura toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -69,9 +82,9 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     }
 
     //Recuperar dados - Inicio
-    private void recuperarDadosUsuario(){
+    private void recuperarDadosUsuario(String id){
+        pessoa = repository.pessoaPorId(id);
 
-        Pessoa pessoa = new Pessoa();
         editNomeUser.setText(pessoa.getNome().toString());
         editNascimento.setText(pessoa.getNascimento().toString());
         editCartaoCredito.setText(pessoa.getCartaoCredito().toString());
@@ -95,12 +108,15 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                     if(!validadeCartao.isEmpty()){
                         if(!cvv.isEmpty()){
 
-                            Pessoa pessoa = new Pessoa();
+
                             pessoa.setId(idUsuarioLogado);
                             pessoa.setNome(nome);
                             pessoa.setCartaoCredito(cartaoCredito);
+                            pessoa.setNascimento(nascimento);
+                            pessoa.setValidadeCartao(validadeCartao);
 
-                            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                            //Acho que o SQLite ou o ROOM não trabalham com date.
+                            /*SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                             try {
                                 Date dateNascimento = format.parse(nascimento);
                                 Date dateValidadeCartao = format.parse(validadeCartao);
@@ -108,7 +124,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                                 pessoa.setValidadeCartao(dateValidadeCartao);
                             } catch (ParseException e) {
                                 e.printStackTrace();
-                            }
+                            }*/
 
                             pessoa.setCvv(cvv);
                             pessoa.setUrlImagem(urlImagemSelecionada);
@@ -160,6 +176,48 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     imagem.compress(Bitmap.CompressFormat.JPEG, 70, baos);
                     byte[] dadosImagem = baos.toByteArray();
+
+
+
+
+
+
+                    //Tentativa de salvar no app
+                    /*
+                    private String saveToInternalStorage(Bitmap bitmapImage){
+                        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+                        // path to /data/data/yourapp/app_data/imageDir
+                        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+                        // Create imageDir
+                        File mypath=new File(directory,"profile.jpg");
+
+                        FileOutputStream fos = null;
+                        try {
+                            fos = new FileOutputStream(mypath);
+                            // Use the compress method on the BitMap object to write image to the OutputStream
+                            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                fos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        return directory.getAbsolutePath();
+                    }
+                    */
+
+
+
+
+
+
+
+
+
+
 
                     //Armazenamento da imagem está no Firebase...Mudar para o room
                     final StorageReference imagemRef = storageReference.child("imagens").child("user").child(idUsuarioLogado + "jpeg");

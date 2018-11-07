@@ -19,4 +19,7 @@ public interface PessoaDAO {
 
     @Query("SELECT * FROM TB_Pessoa ORDER BY nome DESC")
     List<Pessoa>loadPessoas();
+
+    @Query("SELECT * FROM TB_Pessoa WHERE ID==:id")
+    Pessoa recuperarDadosUsuario(String id);
 }

@@ -22,9 +22,15 @@ public class PessoaRepository {
         return mPessoas;
     }
 
+    public Pessoa pessoaPorId(String ID){
+        return mPessoaDAO.recuperarDadosUsuario(ID);
+    }
+
     public void insert(Pessoa pessoa){
         new insertAsyncTask(mPessoaDAO).execute(pessoa);
     }
+
+
 
     private static class insertAsyncTask extends AsyncTask<Pessoa,Void, Void>{
         private PessoaDAO mAsyncTaskDAO;

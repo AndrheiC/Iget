@@ -4,6 +4,7 @@ package br.com.smarttech.acs.iget.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import com.google.firebase.database.DatabaseReference;
 
@@ -14,22 +15,23 @@ import br.com.smarttech.acs.iget.helper.ConfiguracaoFirebase;
 @Entity(tableName = "TB_Pessoa")
 public class Pessoa {
 
-    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "ID")
     private String id;
     private String nome;
     private String email;
     private int senha;
     private String urlImagem;
-    private Date nascimento;
+    private String nascimento;
     private String cartaoCredito;
-    private Date validadeCartao;
+    private String validadeCartao;
     private String cvv;
 
     public Pessoa() {
     }
 
-    public Pessoa(String id, String nome, String email, int senha, String urlImagem, Date nascimento, String cartaoCredito, Date validadeCartao, String cvv) {
+    public Pessoa(String id, String nome, String email, int senha, String urlImagem, String nascimento, String cartaoCredito, String validadeCartao, String cvv) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -41,7 +43,7 @@ public class Pessoa {
         this.cvv = cvv;
     }
 
-    public Pessoa(String id, String nome, String urlImagem, Date nascimento, String cartaoCredito, Date validadeCartao, String cvv) {
+    public Pessoa(String id, String nome, String urlImagem, String nascimento, String cartaoCredito, String validadeCartao, String cvv) {
         this.id = id;
         this.nome = nome;
         this.urlImagem = urlImagem;
@@ -100,11 +102,11 @@ public class Pessoa {
         this.urlImagem = urlImagem;
     }
 
-    public Date getNascimento() {
+    public String getNascimento() {
         return nascimento;
     }
 
-    public void setNascimento(Date nascimento) {
+    public void setNascimento(String nascimento) {
         this.nascimento = nascimento;
     }
 
@@ -116,11 +118,11 @@ public class Pessoa {
         this.cartaoCredito = cartaoCredito;
     }
 
-    public Date getValidadeCartao() {
+    public String getValidadeCartao() {
         return validadeCartao;
     }
 
-    public void setValidadeCartao(Date validadeCartao) {
+    public void setValidadeCartao(String validadeCartao) {
         this.validadeCartao = validadeCartao;
     }
 

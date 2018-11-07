@@ -32,10 +32,6 @@ public class PessoaAdapter extends ArrayAdapter {
 
         Pessoa pessoa= (Pessoa) getItem(position);
 
-        
-
-
-
         return super.getView(position, currentView, parent);
     }
 }
