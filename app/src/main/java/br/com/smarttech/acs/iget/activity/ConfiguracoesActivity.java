@@ -48,7 +48,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     private DatabaseReference firebaseRef;
     private String idUsuarioLogado;
     private String urlImagemSelecionada = "";
-    Pessoa pessoa = new Pessoa();
+    Pessoa pessoa;
     private PessoaRepository repository;
     Context context;
 
@@ -64,7 +64,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracoes);
-
+        pessoa = new Pessoa();
         cw= new ContextWrapper(getApplicationContext());
         diretorio = cw.getDir("igetImageDir", Context.MODE_PRIVATE);
         String caminho = String.valueOf(diretorio);
@@ -104,12 +104,14 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
         pessoa = repository.pessoaPorId(id);
 
-        editNomeUser.setText(pessoa.getNome().toString());
-        editNascimento.setText(pessoa.getNascimento().toString());
-        editCartaoCredito.setText(pessoa.getCartaoCredito().toString());
-        editValidadeCartao.setText(pessoa.getValidadeCartao().toString());
-        editCVV.setText(pessoa.getCvv().toString());
-        //imagePerfil=loadImageFromStorage(caminho, idUsuarioLogado);
+        if(pessoa!=null) {
+            editNomeUser.setText(pessoa.getNome().toString());
+            editNascimento.setText(pessoa.getNascimento().toString());
+            editCartaoCredito.setText(pessoa.getCartaoCredito().toString());
+            editValidadeCartao.setText(pessoa.getValidadeCartao().toString());
+            editCVV.setText(pessoa.getCvv().toString());
+            //imagePerfil=loadImageFromStorage(caminho, idUsuarioLogado);
+        }
 
     }
 
@@ -128,7 +130,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                     if(!validadeCartao.isEmpty()){
                         if(!cvv.isEmpty()){
 
-
+                            pessoa=new Pessoa();
                             pessoa.setId(idUsuarioLogado);
                             pessoa.setNome(nome);
                             pessoa.setCartaoCredito(cartaoCredito);
@@ -148,7 +150,12 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
                             pessoa.setCvv(cvv);
                             pessoa.setUrlImagem(urlImagemSelecionada);
-                            salvarPessoa(view);
+
+                            if(repository.pessoaPorId(idUsuarioLogado)!=null) {
+                                salvarPessoa(view);
+                            }else {
+                                salvarInsertPessoa(view);
+                            }
                             //finish();
                         }else{
                             exibirMensagem("Digite o CVV do cartão de crédito!");
@@ -307,6 +314,18 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         pessoa.setValidadeCartao(editValidadeCartao.getText().toString());
         pessoa.setCvv(editCVV.getText().toString());
         repository.update(pessoa);
+        exibirMensagem("Dados salvos com sucesso");
+    }
+
+    public void salvarInsertPessoa(View view){
+
+        pessoa.setId(idUsuarioLogado);
+        pessoa.setNome(editNomeUser.getText().toString());
+        pessoa.setNascimento(editNascimento.getText().toString());
+        pessoa.setCartaoCredito(editCartaoCredito.getText().toString());
+        pessoa.setValidadeCartao(editValidadeCartao.getText().toString());
+        pessoa.setCvv(editCVV.getText().toString());
+        repository.insert(pessoa);
         exibirMensagem("Dados salvos com sucesso");
     }
 
