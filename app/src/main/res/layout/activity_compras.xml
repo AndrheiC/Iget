@@ -48,12 +48,22 @@
             android:padding="8dp" />
 
         <EditText
-            android:id="@+id/editTextDataHoraAgendada"
+            android:id="@+id/editTextDataAgendada"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
-            android:hint="Data/Hora agendada"
+            android:hint="Data agendada"
+            android:inputType="datetime"
+            android:padding="8dp" />
+
+        <EditText
+            android:id="@+id/editTextHoraAgendada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="Hora agendada"
             android:inputType="datetime"
             android:padding="8dp" />
 

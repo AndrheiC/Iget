@@ -60,7 +60,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_gostei_cinza_24dp"
-                android:onClick="openDialog"
                 android:text="BUY" />
 
             <Button

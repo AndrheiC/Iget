@@ -9,6 +9,12 @@
         android:title="Alterar Dados"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/menuCadastrarProduto"
+        android:icon="@drawable/ic_shopping_cart_cinza_24dp"
+        android:title="Cadastrar produto"
+        app:showAsAction="never" />
+
 
     <item
         android:id="@+id/menuSair"

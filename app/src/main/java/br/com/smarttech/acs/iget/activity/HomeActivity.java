@@ -1,17 +1,25 @@
 package br.com.smarttech.acs.iget.activity;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.AdaptiveIconDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,12 +30,14 @@ import java.util.List;
 import br.com.smarttech.acs.iget.R;
 import br.com.smarttech.acs.iget.adapter.ProdutoAdapter;
 import br.com.smarttech.acs.iget.helper.ConfiguracaoFirebase;
+import br.com.smarttech.acs.iget.model.Compra;
 import br.com.smarttech.acs.iget.model.Produto;
 
 public class HomeActivity extends AppCompatActivity {
 
     private RecyclerView recyclerPostagem;
     private List<Produto> postagens = new ArrayList<>();
+    private LayoutInflater layoutInflater;
 
     private FirebaseAuth autenticacao;
 
@@ -75,6 +85,10 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.menuAlterarDados:
                 alterarDados();
                 break;
+
+            case R.id.menuCadastrarProduto:
+                cadastrarProduto();
+                break;
             //case R.id.menuExcluirDados:
                 //excluirUsuario();
                 //break;
@@ -98,6 +112,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private void alterarDados(){
         startActivity(new Intent(HomeActivity.this, ConfiguracoesActivity.class ));
+
+    }
+
+    private void cadastrarProduto(){
+        startActivity(new Intent(HomeActivity.this, CadastrarProdutoActivity.class ));
 
     }
 
@@ -132,21 +151,37 @@ public class HomeActivity extends AppCompatActivity {
         this.postagens.add(produto);
     }
 
+    public void compra(View view){
+        Compra compra = new Compra();
+        startActivity(new Intent(HomeActivity.this, ComprasActivity.class));
+    }
+
+
+
+
+
+    //Metodo velho dialog
+    /*
     public void openDialog(View view){
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        final EditText editTextDataRetirada = new EditText(this);
 
         dialog.setTitle("Confirma compra?");
-        dialog.setMessage("Ao clicar em SIM você estará confirmando a compra");
+        dialog.setMessage("Data da retirada");
+        dialog.setView(editTextDataRetirada);
+
 
         dialog.setCancelable(false);
         dialog.setIcon(android.R.drawable.ic_input_add);
 
 
-        dialog.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+
+        dialog.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //Fazer a ação de comprar aqui.
+                String dataRetirada = editTextDataRetirada.getText().toString();
             }
         });
 
@@ -164,4 +199,5 @@ public class HomeActivity extends AppCompatActivity {
     public void cancel (View view){
 
     }
+*/
 }
