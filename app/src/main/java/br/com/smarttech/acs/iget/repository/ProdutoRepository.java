@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 
+import java.util.List;
+
 import br.com.smarttech.acs.iget.DAO.ProdutoDAO;
 import br.com.smarttech.acs.iget.database.ProdutoRoomDatabase;
 import br.com.smarttech.acs.iget.model.Produto;
@@ -11,19 +13,32 @@ import br.com.smarttech.acs.iget.model.Produto;
 public class ProdutoRepository {
 
     private ProdutoDAO mProdutoDAO;
-    private Produto mProdutos;
+    //private Produto mProdutos;
+    private List<Produto> mProdutos;
+    private List<Integer>mIds;
     private int idProduto;
 
     public ProdutoRepository(Context context){
         ProdutoRoomDatabase db = ProdutoRoomDatabase.getDatabase(context);
         mProdutoDAO = db.produtoDAO();
-        idProduto = mProdutos.getId();
-        mProdutos = mProdutoDAO.recuperarDadosProduto(idProduto);
+        //idProduto = mProdutos.getId();
+        //mProdutos = mProdutoDAO.recuperarDadosProduto(idProduto);
     }
 
     public Produto produtoPorId(int ID){
 
         return mProdutoDAO.recuperarDadosProduto(ID);
+    }
+
+    //public List<Integer> produtoPorIds(){
+
+        //mIds = mProdutoDAO.recuperaIds();
+        //return mIds;
+    //}
+
+    public List<Produto> getAllProdutos(){
+        mProdutos = mProdutoDAO.loadProdutos();
+        return mProdutos;
     }
 
     public void insert(Produto produto){

@@ -2,8 +2,12 @@ package br.com.smarttech.acs.iget.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.AdaptiveIconDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,19 +23,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.smarttech.acs.iget.DAO.ProdutoDAO;
 import br.com.smarttech.acs.iget.R;
 import br.com.smarttech.acs.iget.adapter.ProdutoAdapter;
 import br.com.smarttech.acs.iget.helper.ConfiguracaoFirebase;
 import br.com.smarttech.acs.iget.model.Compra;
 import br.com.smarttech.acs.iget.model.Produto;
+import br.com.smarttech.acs.iget.repository.ProdutoRepository;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -39,12 +49,29 @@ public class HomeActivity extends AppCompatActivity {
     private List<Produto> postagens = new ArrayList<>();
     private LayoutInflater layoutInflater;
 
+    private ProdutoRepository repository;
+
+    ContextWrapper cw;
+    File diretorio;
+    String caminho;
+    Produto produto;
+    int idProduto;
+
     private FirebaseAuth autenticacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        repository = new ProdutoRepository(getApplicationContext());
+
+        //diretorio de imagens
+        cw = new ContextWrapper(getApplicationContext());
+        diretorio = cw.getDir("igetImageDir", Context.MODE_PRIVATE);
+        caminho = String.valueOf(diretorio);
+        produto = new Produto();
+        idProduto = produto.getId();
 
         //vincula com o objeto criado no xml
         recyclerPostagem = findViewById(R.id.recyclerViewPostagem);
@@ -75,9 +102,9 @@ public class HomeActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menuSair:
                 deslogarUsuario();
                 break;
@@ -90,8 +117,8 @@ public class HomeActivity extends AppCompatActivity {
                 cadastrarProduto();
                 break;
             //case R.id.menuExcluirDados:
-                //excluirUsuario();
-                //break;
+            //excluirUsuario();
+            //break;
             case R.id.menuCompras:
                 carrinhoCompras();
                 break;
@@ -100,38 +127,41 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void deslogarUsuario(){
-        try{
+    private void deslogarUsuario() {
+        try {
             autenticacao.signOut();
             //startActivity(new Intent(HomeActivity.this, AutenticacaoActivity.class));
             finish();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void alterarDados(){
-        startActivity(new Intent(HomeActivity.this, ConfiguracoesActivity.class ));
+    private void alterarDados() {
+        startActivity(new Intent(HomeActivity.this, ConfiguracoesActivity.class));
 
     }
 
-    private void cadastrarProduto(){
-        startActivity(new Intent(HomeActivity.this, CadastrarProdutoActivity.class ));
+    private void cadastrarProduto() {
+        startActivity(new Intent(HomeActivity.this, CadastrarProdutoActivity.class));
 
     }
 
-    private void carrinhoCompras(){
-        startActivity(new Intent(HomeActivity.this, ComprasActivity.class ));
+    private void carrinhoCompras() {
+        startActivity(new Intent(HomeActivity.this, ComprasActivity.class));
 
     }
 
-    private void excluirUsuario(){
+    private void excluirUsuario() {
         autenticacao.getCurrentUser().delete();
         startActivity(new Intent(HomeActivity.this, AutenticacaoActivity.class));
     }
 
-    public void prepararPostagens(){
+    public void prepararPostagens() {
 
+        atualizarFilmes();
+
+        /*
         Produto produto = new Produto("Pão Francês (2 unidades)", "Pão Francês quentinho", "R$2,50", R.drawable.paofrances);
         this.postagens.add(produto);
 
@@ -149,15 +179,52 @@ public class HomeActivity extends AppCompatActivity {
 
         produto = new Produto("Bolo de Morango com Chocolate (fatia)", "Delicioso bolo de morango com chocolate, molhadinho (200g)", "R$7,00", R.drawable.bolo);
         this.postagens.add(produto);
+        */
+
     }
 
-    public void compra(View view){
+
+    private void atualizarFilmes() {
+        List<Produto> produtosList = repository.getAllProdutos();
+        for (Produto produto : produtosList) {
+            String nome = produto.getNome();
+            String descricao = produto.getDescricao();
+            String preco = produto.getPreco();
+            Produto postaProduto = new Produto(nome, descricao, preco, R.drawable.bolo);
+            this.postagens.add(postaProduto);
+        }
+
+    }
+
+    public Bitmap loadImageFromStorage(String path, int idProduto) {
+        try {
+            File f = new File(path, idProduto + ".jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            ImageView img = (ImageView) findViewById(R.id.imageProduto);
+            img.setImageBitmap(b);
+            return b;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+//    public Bitmap carregaImagemCardView() {
+//        repository = new ProdutoRepository(getApplicationContext());
+//        List<Produto> produtosList = repository.getAllProdutos();
+//        for (Produto produto : produtosList) {
+//            Bitmap bitmap = loadImageFromStorage(caminho, idProduto);
+//            return bitmap;
+//        }
+//        return null;
+//    }
+
+
+    public void compra(View view) {
         Compra compra = new Compra();
         startActivity(new Intent(HomeActivity.this, ComprasActivity.class));
     }
-
-
-
 
 
     //Metodo velho dialog
