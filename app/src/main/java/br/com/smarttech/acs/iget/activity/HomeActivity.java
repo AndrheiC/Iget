@@ -1,30 +1,21 @@
 package br.com.smarttech.acs.iget.activity;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.AdaptiveIconDrawable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,9 +26,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.smarttech.acs.iget.DAO.ProdutoDAO;
 import br.com.smarttech.acs.iget.R;
-import br.com.smarttech.acs.iget.adapter.ProdutoAdapter;
+import br.com.smarttech.acs.iget.adapter.PostagemAdapter;
 import br.com.smarttech.acs.iget.helper.ConfiguracaoFirebase;
 import br.com.smarttech.acs.iget.model.Compra;
 import br.com.smarttech.acs.iget.model.Produto;
@@ -85,7 +75,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //Define o adapter
         this.prepararPostagens();
-        ProdutoAdapter adapter = new ProdutoAdapter(postagens);
+        PostagemAdapter adapter = new PostagemAdapter(postagens);
         recyclerPostagem.setAdapter(adapter);
 
         //Configura toolbar
@@ -159,7 +149,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void prepararPostagens() {
 
-        atualizarFilmes();
+        atualizarProduto();
 
         /*
         Produto produto = new Produto("Pão Francês (2 unidades)", "Pão Francês quentinho", "R$2,50", R.drawable.paofrances);
@@ -184,7 +174,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    private void atualizarFilmes() {
+    private void atualizarProduto() {
         List<Produto> produtosList = repository.getAllProdutos();
         for (Produto produto : produtosList) {
             String nome = produto.getNome();

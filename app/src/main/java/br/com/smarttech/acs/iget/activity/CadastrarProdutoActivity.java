@@ -10,26 +10,36 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.smarttech.acs.iget.R;
+import br.com.smarttech.acs.iget.adapter.ProdutoAdapter;
+import br.com.smarttech.acs.iget.listener.RecyclerItemClickListener;
 import br.com.smarttech.acs.iget.model.Produto;
 import br.com.smarttech.acs.iget.repository.ProdutoRepository;
 
 public class CadastrarProdutoActivity extends AppCompatActivity {
     private EditText editNomeProduto, editDescricao, editPrecoProduto, editIdPesquisa;
     private ImageView imageProduto;
+    private RecyclerView recyclerViewProduto;
+    private ProdutoAdapter adapterProduto;
+    private List<Produto> produtos = new ArrayList<>();
     private Produto produto;
     private int idProduto;
     private static final int SELECAO_GALERIA = 200;
@@ -53,6 +63,44 @@ public class CadastrarProdutoActivity extends AppCompatActivity {
         produto = new Produto();
         idProduto = produto.getId();
 
+        //Configura toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("IGet - Cadastrar produto");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Configurar recyclerView
+        recyclerViewProduto.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewProduto.setHasFixedSize(true);
+
+        recuperarProdutos();
+
+        //Adiciona evento de clique
+        recyclerViewProduto.addOnItemTouchListener( new RecyclerItemClickListener(this, recyclerViewProduto, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+                Produto produtoSelecionado = produtos.get(position);
+                String nome = produtoSelecionado.getNome();
+                repository.delete(nome);
+                Toast.makeText(getApplicationContext(),"Deletado!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CadastrarProdutoActivity.this, HomeActivity.class));
+            }
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        }));
+
+        adapterProduto = new ProdutoAdapter(produtos, this);
+        recyclerViewProduto.setAdapter(adapterProduto);
+
         try {
             idPesquisa = Integer.parseInt(editIdPesquisa.getText().toString());
         } catch (Exception e) {
@@ -73,7 +121,7 @@ public class CadastrarProdutoActivity extends AppCompatActivity {
         });
     }
 
-    public void salvarCarregarImagem(){
+    public void salvarCarregarImagem() {
         cw = new ContextWrapper(getApplicationContext());
         diretorio = cw.getDir("igetImageDir", Context.MODE_PRIVATE);
         caminho = String.valueOf(diretorio);
@@ -98,6 +146,25 @@ public class CadastrarProdutoActivity extends AppCompatActivity {
         } else {
             exibirMensagem("null");
         }
+
+    }
+
+    //Recuperar dados para a lista de produtos do recyclerView
+    private void recuperarProdutos() {
+        produtos = repository.getAllProdutos();
+
+        List<Produto> produtosList = repository.getAllProdutos();
+        produtos.clear();
+        for (Produto produto : produtosList) {
+            String nome = produto.getNome();
+            String descricao = produto.getDescricao();
+            String preco = produto.getPreco();
+            Produto postaProduto = new Produto(nome, descricao, preco, R.drawable.bolo);
+            this.produtos.add(postaProduto);
+            //adapterProduto.notifyDataSetChanged();
+        }
+
+
 
     }
 
@@ -146,6 +213,7 @@ public class CadastrarProdutoActivity extends AppCompatActivity {
         produto.setPreco(editPrecoProduto.getText().toString());
         repository.update(produto);
         exibirMensagem("Dados salvos com sucesso");
+        startActivity(new Intent(CadastrarProdutoActivity.this, HomeActivity.class));
     }
 
     public void salvarInsertProduto(View view) {
@@ -155,6 +223,7 @@ public class CadastrarProdutoActivity extends AppCompatActivity {
         produto.setPreco(editPrecoProduto.getText().toString());
         repository.insert(produto);
         exibirMensagem("Dados salvos com sucesso");
+        startActivity(new Intent(CadastrarProdutoActivity.this, HomeActivity.class));
     }
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -243,7 +312,7 @@ public class CadastrarProdutoActivity extends AppCompatActivity {
         editNomeProduto = findViewById(R.id.editTextNomeProduto);
         editDescricao = findViewById(R.id.editTextDescricao);
         editPrecoProduto = findViewById(R.id.editTextPrecoProduto);
-        editIdPesquisa = findViewById(R.id.textViewIdPesquisa);
+        recyclerViewProduto = findViewById(R.id.recyclerViewProdutos);
 
     }
 }

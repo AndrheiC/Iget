@@ -19,8 +19,8 @@ public interface ProdutoDAO {
     @Update
     void update (Produto produto);
 
-    @Query("DELETE FROM tb_produto where ID==:id")
-    void delete(int id);
+    @Query("DELETE FROM tb_produto where NOME==:nome")
+    void delete(String nome);
 
     @Query("SELECT * FROM TB_Produto WHERE ID==:id")
     Produto recuperarDadosProduto (int id);

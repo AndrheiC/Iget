@@ -4,6 +4,9 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import br.com.smarttech.acs.iget.repository.ProdutoRepository;
+import br.com.smarttech.acs.iget.repository.Repository;
+
 @Entity(tableName = "TB_Produto")
 public class Produto {
 
@@ -24,6 +27,7 @@ public class Produto {
         this.preco = preco;
         this.imagem = imagem;
     }
+
 
     public int getId() {return id;}
 

@@ -24,7 +24,9 @@
         <activity
             android:name=".activity.ComprasActivity"
             android:parentActivityName=".activity.HomeActivity" />
-        <activity android:name=".activity.CadastrarProdutoActivity"></activity>
+        <activity
+            android:name=".activity.CadastrarProdutoActivity"
+            android:parentActivityName=".activity.HomeActivity" />
     </application>
 
 </manifest>

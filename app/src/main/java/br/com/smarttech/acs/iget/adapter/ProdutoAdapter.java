@@ -1,70 +1,61 @@
 package br.com.smarttech.acs.iget.adapter;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import br.com.smarttech.acs.iget.R;
-import br.com.smarttech.acs.iget.activity.CadastrarProdutoActivity;
-import br.com.smarttech.acs.iget.activity.HomeActivity;
 import br.com.smarttech.acs.iget.model.Produto;
 
-public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.MyViewHolder> {
 
-    private List<Produto> postagens;
-    public ProdutoAdapter(List<Produto> produtoList) {
-        this.postagens = produtoList;
+public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.MyViewHolder>{
+
+    private List<Produto> produtos;
+    private Context context;
+
+    public ProdutoAdapter(List<Produto> produtos, Context context) {
+        this.produtos = produtos;
+        this.context = context;
     }
 
-
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View itemLista = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.postagem_detalhe,viewGroup,false);
-
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        View itemLista = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_produto, parent, false);
         return new MyViewHolder(itemLista);
     }
 
     @Override
-    public void onBindViewHolder( MyViewHolder myViewHolder, int i) {
-
-        Produto produto = postagens.get(i);
-        HomeActivity homeActivity = new HomeActivity();
-        myViewHolder.nome.setText(produto.getNome());
-        myViewHolder.descricao.setText(produto.getDescricao());
-        myViewHolder.preco.setText(produto.getPreco());
-        myViewHolder.imagem.setImageResource(produto.getImagem());
-
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
+        Produto produto = produtos.get(i);
+        holder.nome.setText(produto.getNome());
+        holder.descricao.setText(produto.getDescricao());
+        holder.valor.setText("R$ " + produto.getPreco());
     }
 
     @Override
     public int getItemCount() {
-        return postagens.size();
+        return produtos.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView nome;
-        private TextView descricao;
-        private TextView preco;
-        private ImageView imagem;
+        TextView nome;
+        TextView descricao;
+        TextView valor;
 
-        public MyViewHolder( View itemView) {
+        public MyViewHolder(View itemView) {
             super(itemView);
-            nome = itemView.findViewById(R.id.textViewNome);
-            descricao = itemView.findViewById(R.id.textViewPostagem);
-            preco = itemView.findViewById(R.id.textViewPreco);
-            imagem = itemView.findViewById(R.id.imageViewPostagem);
+
+            nome = itemView.findViewById(R.id.textNomeRefeicao);
+            descricao = itemView.findViewById(R.id.textDescricaoRefeicao);
+            valor = itemView.findViewById(R.id.textPreco);
         }
     }
-
 }

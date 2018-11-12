@@ -17,6 +17,7 @@ public class ProdutoRepository {
     private List<Produto> mProdutos;
     private List<Integer>mIds;
     private int idProduto;
+    private Produto mProduto;
 
     public ProdutoRepository(Context context){
         ProdutoRoomDatabase db = ProdutoRoomDatabase.getDatabase(context);
@@ -49,6 +50,11 @@ public class ProdutoRepository {
     public void update(Produto produto){
 
         new ProdutoRepository.updateAsyncTask(mProdutoDAO).execute(produto);
+    }
+
+    public void delete(String nome){
+
+        mProdutoDAO.delete(nome);
     }
 
 
