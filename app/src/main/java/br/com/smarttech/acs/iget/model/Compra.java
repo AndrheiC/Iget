@@ -2,28 +2,32 @@ package br.com.smarttech.acs.iget.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity(tableName = "TB_Compra")
+@Entity(tableName = "TB_Compra",
+        foreignKeys = {@ForeignKey(entity = Pessoa.class, parentColumns = "ID", childColumns = "idPessoa")})
 public class Compra {
 
     @NonNull
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "ID")
-    private String id;
-    private String nome;
+    private int id;
     private String valor;
     private String dataCompra;
     private String dataColeta;
     private String horaColeta;
 
+    @ColumnInfo(name = "idPessoa")
+    private int idPessoa;
+
     public Compra() {
     }
 
-    public Compra(@NonNull String id, String nome, String valor, String dataCompra, String dataColeta, String horaColeta) {
+    public Compra(@NonNull int id, @NonNull int idPessoa,  String valor, String dataCompra, String dataColeta, String horaColeta) {
         this.id = id;
-        this.nome = nome;
+        this.id = idPessoa;
         this.valor = valor;
         this.dataCompra = dataCompra;
         this.dataColeta = dataColeta;
@@ -31,20 +35,12 @@ public class Compra {
     }
 
     @NonNull
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(@NonNull String id) {
+    public void setId(@NonNull int id) {
         this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getValor() {
@@ -77,5 +73,14 @@ public class Compra {
 
     public void setHoraColeta(String horaColeta) {
         this.horaColeta = horaColeta;
+    }
+
+
+    public int getIdPessoa() {
+        return idPessoa;
+    }
+
+    public void setIdPessoa(int idPessoa) {
+        this.idPessoa = idPessoa;
     }
 }

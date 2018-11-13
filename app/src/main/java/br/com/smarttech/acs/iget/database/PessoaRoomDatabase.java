@@ -17,7 +17,7 @@ public abstract class PessoaRoomDatabase extends RoomDatabase {
         if(INSTANCE==null){
             synchronized (PessoaRoomDatabase.class){
                 if(INSTANCE==null){
-                    INSTANCE=Room.databaseBuilder(context.getApplicationContext(), PessoaRoomDatabase.class, "pessoa_database").allowMainThreadQueries().build();
+                    INSTANCE=Room.databaseBuilder(context.getApplicationContext(), PessoaRoomDatabase.class, "TB_Pessoa_database").allowMainThreadQueries().build();
                 }
             }
         }
