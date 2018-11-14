@@ -11,6 +11,7 @@ import java.util.List;
 
 import br.com.smarttech.acs.iget.R;
 import br.com.smarttech.acs.iget.activity.HomeActivity;
+import br.com.smarttech.acs.iget.helper.ConfiguracaoFirebase;
 import br.com.smarttech.acs.iget.model.Produto;
 
 public class PostagemAdapter extends RecyclerView.Adapter<PostagemAdapter.MyViewHolder> {
@@ -19,6 +20,7 @@ public class PostagemAdapter extends RecyclerView.Adapter<PostagemAdapter.MyView
     public PostagemAdapter(List<Produto> produtoList) {
         this.postagens = produtoList;
     }
+    public int idProduto, idPessoa;
 
 
     @Override
@@ -33,6 +35,8 @@ public class PostagemAdapter extends RecyclerView.Adapter<PostagemAdapter.MyView
 
         Produto produto = postagens.get(i);
         HomeActivity homeActivity = new HomeActivity();
+        idProduto = produto.getId();
+        String idUsuarioLogado = ConfiguracaoFirebase.getIdUsuario();
         myViewHolder.nome.setText(produto.getNome());
         myViewHolder.descricao.setText(produto.getDescricao());
         myViewHolder.preco.setText("R$ " +produto.getPreco());
@@ -60,5 +64,4 @@ public class PostagemAdapter extends RecyclerView.Adapter<PostagemAdapter.MyView
             imagem = itemView.findViewById(R.id.imageViewPostagem);
         }
     }
-
 }

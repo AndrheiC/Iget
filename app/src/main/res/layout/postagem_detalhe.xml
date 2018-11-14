@@ -62,15 +62,6 @@
                 android:drawableLeft="@drawable/ic_gostei_cinza_24dp"
                 android:text="BUY" />
 
-            <Button
-                android:id="@+id/buttonCancelar"
-                style="?attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableLeft="@drawable/ic_cancel_cinza_24dp"
-                android:onClick="cancel"
-                android:text="Cancel" />
         </LinearLayout>
     </LinearLayout>
 

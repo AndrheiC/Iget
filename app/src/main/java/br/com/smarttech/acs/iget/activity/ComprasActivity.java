@@ -3,20 +3,45 @@ package br.com.smarttech.acs.iget.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
+
+import java.util.List;
 
 import br.com.smarttech.acs.iget.R;
+import br.com.smarttech.acs.iget.helper.ConfiguracaoFirebase;
+import br.com.smarttech.acs.iget.model.Pessoa;
+import br.com.smarttech.acs.iget.model.Produto;
 
 public class ComprasActivity extends AppCompatActivity {
+    Produto produtoComprado;
+    private String idUsuarioLogado;
+    Pessoa pessoa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compras);
 
+        idUsuarioLogado = idUsuarioLogado = ConfiguracaoFirebase.getIdUsuario();
+        pessoa.setId(idUsuarioLogado);
+
         //Configura toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("IGet - Carrinho");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public void recebeProdutoComprado(Produto produto){
+        produtoComprado = new Produto();
+        produtoComprado = produto;
+        exibirMensagem("Produto recebido");
+        exibirMensagem(idUsuarioLogado);
+    }
+
+
+
+    public void exibirMensagem(String texto) {
+        Toast.makeText(this, texto, Toast.LENGTH_SHORT).show();
     }
 }

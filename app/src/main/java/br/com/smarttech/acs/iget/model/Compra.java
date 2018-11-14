@@ -3,12 +3,21 @@ package br.com.smarttech.acs.iget.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.content.Context;
 import android.support.annotation.NonNull;
+
+import br.com.smarttech.acs.iget.activity.HomeActivity;
+import br.com.smarttech.acs.iget.repository.CompraRepository;
+import br.com.smarttech.acs.iget.repository.Repository;
 
 @Entity(tableName = "TB_Compra",
         foreignKeys = {@ForeignKey(entity = Pessoa.class, parentColumns = "ID", childColumns = "idPessoa")})
 public class Compra {
+
+//    @Ignore
+//    CompraRepository repository = new CompraRepository(this);
 
     @NonNull
     @PrimaryKey(autoGenerate = false)
@@ -18,20 +27,23 @@ public class Compra {
     private String dataCompra;
     private String dataColeta;
     private String horaColeta;
+    private int qtd;
 
     @ColumnInfo(name = "idPessoa")
-    private int idPessoa;
+    private String idPessoa;
 
     public Compra() {
     }
 
-    public Compra(@NonNull int id, @NonNull int idPessoa,  String valor, String dataCompra, String dataColeta, String horaColeta) {
+    public Compra(@NonNull int id, @NonNull String idPessoa,  String valor, String dataCompra, String dataColeta, String horaColeta, int qtd) {
         this.id = id;
-        this.id = idPessoa;
+        this.idPessoa = idPessoa;
         this.valor = valor;
         this.dataCompra = dataCompra;
         this.dataColeta = dataColeta;
         this.horaColeta = horaColeta;
+        this.qtd = qtd;
+
     }
 
     @NonNull
@@ -75,12 +87,19 @@ public class Compra {
         this.horaColeta = horaColeta;
     }
 
-
-    public int getIdPessoa() {
+    public String getIdPessoa() {
         return idPessoa;
     }
 
-    public void setIdPessoa(int idPessoa) {
+    public void setIdPessoa(String idPessoa) {
         this.idPessoa = idPessoa;
+    }
+
+    public int getQtd() {
+        return qtd;
+    }
+
+    public void setQtd(int qtd) {
+        this.qtd = qtd;
     }
 }
