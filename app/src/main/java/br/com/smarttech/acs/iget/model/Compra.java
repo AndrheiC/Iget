@@ -5,12 +5,10 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
-import android.content.Context;
 import android.support.annotation.NonNull;
 
-import br.com.smarttech.acs.iget.activity.HomeActivity;
-import br.com.smarttech.acs.iget.repository.CompraRepository;
-import br.com.smarttech.acs.iget.repository.Repository;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(tableName = "TB_Compra",
         foreignKeys = {@ForeignKey(entity = Pessoa.class, parentColumns = "ID", childColumns = "idPessoa")})
@@ -21,7 +19,7 @@ public class Compra {
 
     @NonNull
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "ID")
+    @ColumnInfo(name = "IDCompra")
     private int id;
     private String valor;
     private String dataCompra;
@@ -32,7 +30,18 @@ public class Compra {
     @ColumnInfo(name = "idPessoa")
     private String idPessoa;
 
-    public Compra() {
+    @Ignore
+    private List<Produto> produtoList = new ArrayList<>();
+
+    public Compra(String valor, String dataCompra, String dataColeta, String horaColeta, int qtd, String idPessoa, List<Produto> produtoList) {
+        this.id = id;
+        this.idPessoa = idPessoa;
+        this.valor = valor;
+        this.dataCompra = dataCompra;
+        this.dataColeta = dataColeta;
+        this.horaColeta = horaColeta;
+        this.qtd = qtd;
+        this.produtoList = produtoList;
     }
 
     public Compra(@NonNull int id, @NonNull String idPessoa,  String valor, String dataCompra, String dataColeta, String horaColeta, int qtd) {
@@ -44,6 +53,9 @@ public class Compra {
         this.horaColeta = horaColeta;
         this.qtd = qtd;
 
+    }
+
+    public Compra() {
     }
 
     @NonNull
@@ -101,5 +113,13 @@ public class Compra {
 
     public void setQtd(int qtd) {
         this.qtd = qtd;
+    }
+
+    public List<Produto> getProdutoList() {
+        return produtoList;
+    }
+
+    public void setProdutoList(List<Produto> produtoList) {
+        this.produtoList = produtoList;
     }
 }

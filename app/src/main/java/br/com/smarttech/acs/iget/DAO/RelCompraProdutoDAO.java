@@ -25,11 +25,11 @@ public interface RelCompraProdutoDAO {
             "WHERE REL_CompraProduto.idCompra=:idCompra")
     List<Produto> getProdutos (final int idCompra);
 
-    @Query("SELECT * FROM TB_Compra INNER JOIN rel_compraproduto ON TB_Compra.ID=rel_compraproduto.idCompra " +
+    @Query("SELECT * FROM TB_Compra INNER JOIN rel_compraproduto ON TB_Compra.IDCompra=rel_compraproduto.idCompra " +
             "WHERE rel_compraproduto.idProduto=:idProduto")
     List<Compra> getCompras(final int idProduto);
 
-    @Query("SELECT * FROM TB_Compra INNER JOIN rel_compraproduto ON TB_Compra.ID=rel_compraproduto.idCompra " +
+    @Query("SELECT * FROM TB_Compra INNER JOIN rel_compraproduto ON TB_Compra.IDCompra=rel_compraproduto.idCompra " +
             "WHERE rel_compraproduto.idProduto=:idProduto")
     List<CompraProduto> getCompraProduto(final int idProduto);
 

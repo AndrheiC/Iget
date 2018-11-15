@@ -101,12 +101,6 @@ public class CadastrarProdutoActivity extends AppCompatActivity {
         adapterProduto = new ProdutoAdapter(produtos, this);
         recyclerViewProduto.setAdapter(adapterProduto);
 
-        try {
-            idPesquisa = Integer.parseInt(editIdPesquisa.getText().toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
 
         imageProduto.setOnClickListener(new View.OnClickListener() {
             @Override

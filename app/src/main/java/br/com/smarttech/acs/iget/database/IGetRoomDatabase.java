@@ -15,7 +15,7 @@ import br.com.smarttech.acs.iget.model.Produto;
 import br.com.smarttech.acs.iget.model.RelCompraProduto;
 
 
-@Database(entities = {Compra.class, Pessoa.class, Produto.class, RelCompraProduto.class},version = 3)
+@Database(entities = {Compra.class, Pessoa.class, Produto.class, RelCompraProduto.class},version = 4)
 public abstract class IGetRoomDatabase extends RoomDatabase {
     private static volatile IGetRoomDatabase INSTANCE;
     public  abstract CompraDAO compraDAO();
