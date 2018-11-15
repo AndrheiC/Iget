@@ -15,7 +15,7 @@ import br.com.smarttech.acs.iget.model.Pessoa;
 public interface CompraDAO {
 
     @Insert
-    void insert(Compra compra);
+    long insert(Compra compra);
 
     @Update
     void update (Compra compra);

@@ -1,6 +1,7 @@
 package br.com.smarttech.acs.iget.DAO;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
@@ -27,4 +28,15 @@ public interface RelCompraProdutoDAO {
     @Query("SELECT * FROM TB_Compra INNER JOIN rel_compraproduto ON TB_Compra.ID=rel_compraproduto.idCompra " +
             "WHERE rel_compraproduto.idProduto=:idProduto")
     List<Compra> getCompras(final int idProduto);
+
+    @Query("SELECT * FROM TB_Compra INNER JOIN rel_compraproduto ON TB_Compra.ID=rel_compraproduto.idCompra " +
+            "WHERE rel_compraproduto.idProduto=:idProduto")
+    List<CompraProduto> getCompraProduto(final int idProduto);
+
+    static class CompraProduto{
+        @Embedded
+        Compra compra;
+        @Embedded
+        Produto produto;
+    }
 }

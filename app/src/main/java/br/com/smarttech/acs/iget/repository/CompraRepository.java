@@ -6,7 +6,8 @@ import android.os.AsyncTask;
 import java.util.List;
 
 import br.com.smarttech.acs.iget.DAO.CompraDAO;
-import br.com.smarttech.acs.iget.database.CompraRoomDatabase;
+
+import br.com.smarttech.acs.iget.database.IGetRoomDatabase;
 import br.com.smarttech.acs.iget.model.Compra;
 
 
@@ -19,7 +20,7 @@ public class CompraRepository {
     private Compra mCompra;
 
     public CompraRepository(Context context){
-        CompraRoomDatabase db = CompraRoomDatabase.getDatabase(context);
+        IGetRoomDatabase db = IGetRoomDatabase.getDatabase(context);
         mCompraDAO = db.compraDAO();
     }
 
@@ -33,9 +34,9 @@ public class CompraRepository {
         return mCompras;
     }
 
-    public void insert(Compra compra){
-
-        new CompraRepository.insertAsyncTask(mCompraDAO).execute(compra);
+    public long insert(Compra compra){
+        return mCompraDAO.insert(compra);
+        //new CompraRepository.insertAsyncTask(mCompraDAO).execute(compra);
     }
 
     public void update(Compra compra){

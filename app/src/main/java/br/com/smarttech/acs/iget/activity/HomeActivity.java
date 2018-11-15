@@ -39,6 +39,7 @@ import br.com.smarttech.acs.iget.model.Produto;
 import br.com.smarttech.acs.iget.model.RelCompraProduto;
 import br.com.smarttech.acs.iget.repository.CompraRepository;
 import br.com.smarttech.acs.iget.repository.ProdutoRepository;
+import br.com.smarttech.acs.iget.repository.Repository;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -47,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
     private List<Compra> compras = new ArrayList<>();
     private LayoutInflater layoutInflater;
 
-    private ProdutoRepository repository;
+    private Repository repository;
 
     ContextWrapper cw;
     File diretorio;
@@ -66,7 +67,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        repository = new ProdutoRepository(getApplicationContext());
+        repository = new Repository(getApplicationContext());
         compraRepository = new CompraRepository(getApplicationContext());
 
         //diretorio de imagens
@@ -116,7 +117,7 @@ public class HomeActivity extends AppCompatActivity {
                 compra.setDataCompra(dataString);
 
                 //compras.add(compra);
-                compraRepository.insert(compra);
+                int idCompra = (int)compraRepository.insert(compra);
                 exibirMensagem("Compra realizada. Defina a data");
 
 
@@ -124,8 +125,8 @@ public class HomeActivity extends AppCompatActivity {
 
 
                 //Como preencher a tabela relacional??????????????????????????
-                //relCompraProduto = new RelCompraProduto(compra.getId(), );
-
+                relCompraProduto = new RelCompraProduto(produtoSelecionado.getId(), idCompra);
+                repository.getRelCompraProdutoRepository().insert(relCompraProduto);
             }
 
             @Override
@@ -231,12 +232,13 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void atualizarProduto() {
-        List<Produto> produtosList = repository.getAllProdutos();
+        List<Produto> produtosList = repository.getProdutoRepository().getAllProdutos();
         for (Produto produto : produtosList) {
             String nome = produto.getNome();
             String descricao = produto.getDescricao();
             String preco = produto.getPreco();
             Produto postaProduto = new Produto(nome, descricao, preco, R.drawable.bolo);
+            postaProduto.setId(produto.getId());
             this.postagens.add(postaProduto);
         }
 
@@ -311,4 +313,5 @@ public class HomeActivity extends AppCompatActivity {
     public void exibirMensagem(String texto) {
         Toast.makeText(this, texto, Toast.LENGTH_SHORT).show();
     }
+
 }

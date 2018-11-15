@@ -19,7 +19,7 @@ public interface ProdutoDAO {
     @Update
     void update (Produto produto);
 
-    @Query("DELETE FROM tb_produto where NOME==:nome")
+    @Query("DELETE FROM TB_Produto where NOME==:nome")
     void delete(String nome);
 
     @Query("SELECT * FROM TB_Produto WHERE ID==:id")
@@ -28,10 +28,10 @@ public interface ProdutoDAO {
     //@Query("SELECT * FROM tb_produto")
     //List<Integer> recuperaIds ();
 
-    @Query("SELECT nome from tb_produto")
+    @Query("SELECT nome from TB_Produto")
     List<String> loadNames();
 
-    @Query("SELECT * from tb_produto ORDER BY id ASC")
+    @Query("SELECT ID, nome, descricao,preco,imagem from TB_Produto ORDER BY ID ASC")
     List<Produto> loadProdutos();
 
 

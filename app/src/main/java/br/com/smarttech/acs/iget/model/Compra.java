@@ -20,7 +20,7 @@ public class Compra {
 //    CompraRepository repository = new CompraRepository(this);
 
     @NonNull
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ID")
     private int id;
     private String valor;

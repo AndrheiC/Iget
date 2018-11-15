@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 import java.util.List;
 
 import br.com.smarttech.acs.iget.DAO.ProdutoDAO;
-import br.com.smarttech.acs.iget.database.ProdutoRoomDatabase;
+import br.com.smarttech.acs.iget.database.IGetRoomDatabase;
 import br.com.smarttech.acs.iget.model.Produto;
 
 public class ProdutoRepository {
@@ -20,7 +20,7 @@ public class ProdutoRepository {
     private Produto mProduto;
 
     public ProdutoRepository(Context context){
-        ProdutoRoomDatabase db = ProdutoRoomDatabase.getDatabase(context);
+        IGetRoomDatabase db = IGetRoomDatabase.getDatabase(context);
         mProdutoDAO = db.produtoDAO();
         //idProduto = mProdutos.getId();
         //mProdutos = mProdutoDAO.recuperarDadosProduto(idProduto);

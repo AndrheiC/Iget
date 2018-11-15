@@ -5,11 +5,8 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
-import br.com.smarttech.acs.iget.DAO.CompraDAO;
 import br.com.smarttech.acs.iget.DAO.RelCompraProdutoDAO;
-import br.com.smarttech.acs.iget.database.CompraRoomDatabase;
-import br.com.smarttech.acs.iget.database.RelCompraProdutoRoomDatabase;
-import br.com.smarttech.acs.iget.model.Compra;
+import br.com.smarttech.acs.iget.database.IGetRoomDatabase;
 import br.com.smarttech.acs.iget.model.RelCompraProduto;
 
 public class RelCompraProdutoRepository {
@@ -19,7 +16,7 @@ public class RelCompraProdutoRepository {
     private RelCompraProduto mRelCompraProduto;
 
     public RelCompraProdutoRepository(Context context){
-        RelCompraProdutoRoomDatabase db = RelCompraProdutoRoomDatabase.getDatabase(context);
+        IGetRoomDatabase db = IGetRoomDatabase.getDatabase(context);
         mRelCompraProdutoDAO = db.relCompraProdutoDAO();
     }
 

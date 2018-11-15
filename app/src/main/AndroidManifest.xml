@@ -27,6 +27,7 @@
         <activity
             android:name=".activity.CadastrarProdutoActivity"
             android:parentActivityName=".activity.HomeActivity" />
+        <activity android:name=".activity.CarrinhoActivity"></activity>
     </application>
 
 </manifest>
