@@ -48,7 +48,7 @@ public class CarrinhoAdapter extends RecyclerView.Adapter<CarrinhoAdapter.MyView
         holder.produtoComprado.setText(nomeProduto);
         holder.descricaoProdutoComprado.setText(descricaoProduto);
 
-        holder.qtd.setText(produto.getQtd());
+        //holder.qtd.setText(produto.getQtd());
         holder.preco.setText(produto.getValor());
         holder.dtCompra.setText(produto.getDataCompra());
         holder.dtRetirada.setText(produto.getDataColeta());
@@ -77,7 +77,9 @@ public class CarrinhoAdapter extends RecyclerView.Adapter<CarrinhoAdapter.MyView
             dtCompra = itemView.findViewById(R.id.textDataCompra);
             produtoComprado = itemView.findViewById(R.id.textNomeRefeicao);
             descricaoProdutoComprado = itemView.findViewById(R.id.textDescricaoRefeicao);
-            qtd = itemView.findViewById(R.id.textViewQtd);
+            //qtd = itemView.findViewById(R.id.textViewQtd);
+
+            //
             preco = itemView.findViewById(R.id.textPreco);
             dtRetirada = itemView.findViewById(R.id.textDataRetirada);
             horaRetirada = itemView.findViewById(R.id.textHoraRetirada);

@@ -23,6 +23,8 @@ public class CarrinhoActivity extends AppCompatActivity {
     private List<Compra> produtos;
     private Compra produto;
     private Repository repository;
+    private CompraDAO.CompraPessoaJoin compraPessoaJoin;
+    private List<CompraDAO.CompraPessoaJoin> compraPessoaJoinList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,6 @@ public class CarrinhoActivity extends AppCompatActivity {
     //Recuperar dados para a lista de produtos do recyclerView
     private void recuperarProdutosCarrinho() {
         String idUsuarioLogado = ConfiguracaoFirebase.getIdUsuario();
-        produtos = repository.getCompraRepository().getAllCompra(idUsuarioLogado);
 
         List<Compra> produtosList = repository.getCompraRepository().getAllCompra(idUsuarioLogado);
         produtos.clear();

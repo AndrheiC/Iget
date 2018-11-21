@@ -28,13 +28,10 @@ public interface CompraDAO {
     @Query("SELECT * FROM TB_Compra WHERE idPessoa==:id")
     Compra recuperarDadosCompra (int id);
 
-    @Query("SELECT tb_Compra.IDCompra, tb_Compra.valor, tb_Compra.dataCompra, tb_Compra.dataColeta, tb_Compra.horaColeta, tb_pessoa.nome as pessoa_nome, REL_CompraProduto.idProduto as REL_idProduto, REL_CompraProduto.idCompra as REL_idCompraRelacional, tb_produto.nome as nomeProduto, tb_produto.descricao as descricaoProduto " +
+    @Query("SELECT tb_Compra.IDCompra, tb_Compra.valor, tb_Compra.dataCompra, tb_Compra.dataColeta, tb_Compra.horaColeta, tb_Compra.qtd, tb_Compra.idPessoa " +
             "FROM TB_Compra " +
-            "INNER JOIN tb_pessoa ON tb_Compra.idPessoa=tb_pessoa.ID " +
-            "INNER JOIN REL_CompraProduto ON TB_Compra.IDCompra =REL_CompraProduto.idCompra " +
-            "INNER JOIN TB_Produto ON REL_CompraProduto.idProduto = TB_Produto.ID " +
             "WHERE TB_Compra.idPessoa == :idPessoa")
-    List<CompraPessoaJoin> compraProdutoJoin(String idPessoa);
+    List<Compra> compraProdutoJoin(String idPessoa);
 
     static class CompraPessoaJoin{
         @Embedded

@@ -31,29 +31,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textViewVerCarrinho"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Ver carrinho"
-            android:textColor="@color/common_google_signin_btn_text_dark_default" />
-
-        <TextView
-            android:id="@+id/textViewQtd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="QTD: 0"
-            android:textColor="@color/common_google_signin_btn_text_dark_default" />
-
-        <TextView
-            android:id="@+id/textViewCarrinhoTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="R$ 00.00"
-            android:textColor="@color/common_google_signin_btn_text_dark_default" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

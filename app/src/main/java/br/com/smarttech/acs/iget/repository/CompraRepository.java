@@ -30,7 +30,7 @@ public class CompraRepository {
     }
 
     public List<Compra> getAllCompra(String idPessoa){
-        mcompraPessoaJoinList = mCompraDAO.compraProdutoJoin(idPessoa);
+        mCompras = mCompraDAO.compraProdutoJoin(idPessoa);
         return mCompras;
     }
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="#ffffff"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp"
@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logoigetsmall" />
+        app:srcCompat="@drawable/logoiget" />
 
     <EditText
         android:id="@+id/editTextUsuario"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Logar"
-            android:textColor="@android:color/background_light"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
             android:textSize="18sp" />
 
         <Switch
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Cadastre-se"
-            android:textColor="@android:color/background_light"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -84,6 +84,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:theme="@style/botaoPadrao"
-        android:text="Acessar" />/>
+        android:text="Acessar"
+        android:theme="@style/botaoPadrao" />/>
 </LinearLayout>
