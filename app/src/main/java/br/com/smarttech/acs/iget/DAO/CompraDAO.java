@@ -10,6 +10,8 @@ import java.util.List;
 
 import br.com.smarttech.acs.iget.model.Compra;
 import br.com.smarttech.acs.iget.model.Pessoa;
+import br.com.smarttech.acs.iget.model.Produto;
+import br.com.smarttech.acs.iget.model.RelCompraProduto;
 
 @Dao
 public interface CompraDAO {
@@ -26,17 +28,22 @@ public interface CompraDAO {
     @Query("SELECT * FROM TB_Compra WHERE idPessoa==:id")
     Compra recuperarDadosCompra (int id);
 
-    @Query("SELECT tb_Compra.IDCompra, tb_Compra.valor, tb_Compra.dataCompra, tb_Compra.dataColeta, tb_Compra.horaColeta, tb_pessoa.nome as pessoa_nome, REL_CompraProduto.idProduto as idProduto, REL_CompraProduto.idCompra as idCompraRelacional, tb_produto.nome as nomeProduto, tb_produto.descricao as descricaoProduto " +
+    @Query("SELECT tb_Compra.IDCompra, tb_Compra.valor, tb_Compra.dataCompra, tb_Compra.dataColeta, tb_Compra.horaColeta, tb_pessoa.nome as pessoa_nome, REL_CompraProduto.idProduto as REL_idProduto, REL_CompraProduto.idCompra as REL_idCompraRelacional, tb_produto.nome as nomeProduto, tb_produto.descricao as descricaoProduto " +
             "FROM TB_Compra " +
             "INNER JOIN tb_pessoa ON tb_Compra.idPessoa=tb_pessoa.ID " +
             "INNER JOIN REL_CompraProduto ON TB_Compra.IDCompra =REL_CompraProduto.idCompra " +
-            "INNER JOIN TB_Produto ON REL_CompraProduto.idProduto = TB_Produto.ID ")
-    List<CompraPessoaJoin> compraProdutoJoin();
+            "INNER JOIN TB_Produto ON REL_CompraProduto.idProduto = TB_Produto.ID " +
+            "WHERE TB_Compra.idPessoa == :idPessoa")
+    List<CompraPessoaJoin> compraProdutoJoin(String idPessoa);
 
     static class CompraPessoaJoin{
         @Embedded
         public Compra compra;
         @Embedded(prefix = "pessoa_")
         public Pessoa pessoa;
+        @Embedded (prefix = "REL_")
+        public RelCompraProduto relCompraProduto;
+        @Embedded
+        public Produto produto;
     }
 }

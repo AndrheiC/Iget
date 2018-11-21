@@ -9,8 +9,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.smarttech.acs.iget.DAO.CompraDAO;
 import br.com.smarttech.acs.iget.R;
 import br.com.smarttech.acs.iget.adapter.CarrinhoAdapter;
+import br.com.smarttech.acs.iget.helper.ConfiguracaoFirebase;
 import br.com.smarttech.acs.iget.model.Compra;
 import br.com.smarttech.acs.iget.model.Produto;
 import br.com.smarttech.acs.iget.repository.Repository;
@@ -54,9 +56,10 @@ public class CarrinhoActivity extends AppCompatActivity {
 
     //Recuperar dados para a lista de produtos do recyclerView
     private void recuperarProdutosCarrinho() {
-        produtos = repository.getCompraRepository().getAllCompra();
+        String idUsuarioLogado = ConfiguracaoFirebase.getIdUsuario();
+        produtos = repository.getCompraRepository().getAllCompra(idUsuarioLogado);
 
-        List<Compra> produtosList = repository.getCompraRepository().getAllCompra();
+        List<Compra> produtosList = repository.getCompraRepository().getAllCompra(idUsuarioLogado);
         produtos.clear();
         for (Compra produto : produtosList) {
             int idCompra = produto.getId();

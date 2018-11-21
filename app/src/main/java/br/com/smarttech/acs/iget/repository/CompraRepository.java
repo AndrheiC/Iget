@@ -29,8 +29,8 @@ public class CompraRepository {
         return mCompraDAO.recuperarDadosCompra(ID);
     }
 
-    public List<Compra> getAllCompra(){
-        mcompraPessoaJoinList = mCompraDAO.compraProdutoJoin();
+    public List<Compra> getAllCompra(String idPessoa){
+        mcompraPessoaJoinList = mCompraDAO.compraProdutoJoin(idPessoa);
         return mCompras;
     }
 
