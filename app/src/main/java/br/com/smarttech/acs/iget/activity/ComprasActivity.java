@@ -22,7 +22,7 @@ public class ComprasActivity extends AppCompatActivity {
 
         //Configura toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("IGet - Carrinho");
+        toolbar.setTitle("Carrinho");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

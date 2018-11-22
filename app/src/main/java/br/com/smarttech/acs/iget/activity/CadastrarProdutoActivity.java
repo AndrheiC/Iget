@@ -65,7 +65,7 @@ public class CadastrarProdutoActivity extends AppCompatActivity {
 
         //Configura toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("IGet - Cadastrar produto");
+        toolbar.setTitle("Cadastro de produto");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

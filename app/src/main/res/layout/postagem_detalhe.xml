@@ -60,7 +60,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_gostei_cinza_24dp"
-                android:text="BUY" />
+                android:text="COMPRAR"
+                android:textAlignment="center" />
 
         </LinearLayout>
     </LinearLayout>

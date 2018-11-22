@@ -45,14 +45,14 @@ public class CarrinhoAdapter extends RecyclerView.Adapter<CarrinhoAdapter.MyView
             descricaoProduto = produto1.getDescricao();
             idProdutoComprado = produto1.getId();
         }
-        holder.produtoComprado.setText(nomeProduto);
-        holder.descricaoProdutoComprado.setText(descricaoProduto);
+        //holder.produtoComprado.setText(nomeProduto);
+        //holder.descricaoProdutoComprado.setText(descricaoProduto);
 
         //holder.qtd.setText(produto.getQtd());
-        holder.preco.setText(produto.getValor());
+        holder.preco.setText("R$ " +produto.getValor());
         holder.dtCompra.setText(produto.getDataCompra());
-        holder.dtRetirada.setText(produto.getDataColeta());
-        holder.horaRetirada.setText(produto.getHoraColeta());
+        //holder.dtRetirada.setText(produto.getDataColeta());
+        //holder.horaRetirada.setText(produto.getHoraColeta());
 
     }
 
@@ -75,14 +75,14 @@ public class CarrinhoAdapter extends RecyclerView.Adapter<CarrinhoAdapter.MyView
             super(itemView);
 
             dtCompra = itemView.findViewById(R.id.textDataCompra);
-            produtoComprado = itemView.findViewById(R.id.textNomeRefeicao);
-            descricaoProdutoComprado = itemView.findViewById(R.id.textDescricaoRefeicao);
+            //produtoComprado = itemView.findViewById(R.id.textNomeRefeicao);
+            //descricaoProdutoComprado = itemView.findViewById(R.id.textDescricaoRefeicao);
             //qtd = itemView.findViewById(R.id.textViewQtd);
 
             //
             preco = itemView.findViewById(R.id.textPreco);
-            dtRetirada = itemView.findViewById(R.id.textDataRetirada);
-            horaRetirada = itemView.findViewById(R.id.textHoraRetirada);
+            //dtRetirada = itemView.findViewById(R.id.textDataRetirada);
+            //horaRetirada = itemView.findViewById(R.id.textHoraRetirada);
         }
     }
 }

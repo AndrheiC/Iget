@@ -31,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:hint="Nome do produto"
@@ -41,6 +42,7 @@
             android:id="@+id/editTextDescricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:hint="Descrição sucinta"
@@ -51,6 +53,7 @@
             android:id="@+id/editTextPrecoProduto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:hint="Preço do produto"
@@ -64,7 +67,7 @@
             android:layout_height="wrap_content"
             android:onClick="validarDadosProduto"
             android:padding="16dp"
-            android:text="Cadastrar"
+            android:text="Cadastrar produto"
             android:theme="@style/botaoPadrao" />
 
         <LinearLayout

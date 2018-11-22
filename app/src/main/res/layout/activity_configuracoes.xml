@@ -31,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:hint="Nome completo"
@@ -41,6 +42,7 @@
             android:id="@+id/editTextNascimento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:hint="Data de nascimento"
@@ -51,6 +53,7 @@
             android:id="@+id/editTextCartaoCredito"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:hint="Número do Cartão de Crédito"
@@ -61,6 +64,7 @@
             android:id="@+id/editTextValidadeCC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:hint="Validade do Cartão de Crédito"
@@ -84,7 +88,7 @@
             android:layout_height="wrap_content"
             android:onClick="validarDadosUsuario"
             android:padding="16dp"
-            android:text="Acessar"
+            android:text="Salvar"
             android:theme="@style/botaoPadrao" />
 
     </LinearLayout>

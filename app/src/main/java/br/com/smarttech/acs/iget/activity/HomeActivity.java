@@ -134,7 +134,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //Configura toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("IGet - Compras");
+        toolbar.setTitle("Produtos");
         setSupportActionBar(toolbar);
     }
 
